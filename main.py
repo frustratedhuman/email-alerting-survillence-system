@@ -46,7 +46,7 @@ while True:
     status_list = status_list[-2:]
 
     if status_list[0] == 1 and status_list[1] == 0:
-        send_email()
+        send_email(images_with_object)
 
     print(status_list)
 
