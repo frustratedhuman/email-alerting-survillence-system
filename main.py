@@ -10,7 +10,6 @@ time.sleep(1)
 first_frame = None
 status_list = []
 count = 1
-num = 1
 
 # for video saving saving
 frame_width = int(video.get(3))
@@ -19,8 +18,7 @@ size = (frame_width, frame_height)
 nowtime = datetime.now()
 formatted_time = nowtime.strftime("%Y-%m-%d %H:%M:%S")
 filename = f"{formatted_time}.mp4"
-result = cv2.VideoWriter(f"recordings/video{num}.mp4", cv2.VideoWriter_fourcc(*'MP4V'), 10, size)
-num = num + 1
+result = cv2.VideoWriter("recordings/video.mp4", cv2.VideoWriter_fourcc(*'MP4V'), 10, size)
 
 while True:
     status = 0
