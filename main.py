@@ -1,6 +1,7 @@
 import cv2
 import time
 import glob
+from datetime import datetime
 from emailing import send_email
 
 video = cv2.VideoCapture(0)
@@ -9,6 +10,17 @@ time.sleep(1)
 first_frame = None
 status_list = []
 count = 1
+num = 1
+
+# for video saving saving
+frame_width = int(video.get(3))
+frame_height = int(video.get(4))
+size = (frame_width, frame_height)
+nowtime = datetime.now()
+formatted_time = nowtime.strftime("%Y-%m-%d %H:%M:%S")
+filename = f"{formatted_time}.mp4"
+result = cv2.VideoWriter(f"recordings/video{num}.mp4", cv2.VideoWriter_fourcc(*'MP4V'), 10, size)
+num = num + 1
 
 while True:
     status = 0
@@ -45,8 +57,12 @@ while True:
     status_list.append(status)
     status_list = status_list[-2:]
 
+
+    if status == 1:
+        result.write(frame)
     if status_list[0] == 1 and status_list[1] == 0:
         send_email(images_with_object)
+
 
     print(status_list)
 
@@ -56,5 +72,6 @@ while True:
     if key == ord("q"):
         break
 
+result.release()
 video.release()
 
