@@ -24,4 +24,4 @@ def send_email(image_path):
 
 
 if __name__ == "__main__":
-    send_email()
+    send_email(image_path="images/19.png")
