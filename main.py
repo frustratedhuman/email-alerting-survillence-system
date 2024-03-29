@@ -13,10 +13,6 @@ first_frame = None
 status_list = []
 count = 1
 
-def clean_folder():
-    images = glob.glob("images/*.png")
-    for image in images:
-        os.remove(image)
 
 # for video saving saving
 frame_width = int(video.get(3))
@@ -26,6 +22,11 @@ nowtime = datetime.now()
 formatted_time = nowtime.strftime("%Y-%m-%d %H:%M:%S")
 filename = f"{formatted_time}.mp4"
 result = cv2.VideoWriter("recordings/video.mp4", cv2.VideoWriter_fourcc(*'MP4V'), 10, size)
+
+def clean_folder():
+    images = glob.glob("images/*.png")
+    for image in images:
+        os.remove(image)
 
 while True:
     status = 0
@@ -69,13 +70,9 @@ while True:
         email_thread = Thread(target=send_email, args=(images_with_object , ))
         email_thread.daemon = True
         clean_thread = Thread(target=clean_folder)
-        clean_thread.daemon = True
+        email_thread.daemon = True
 
         email_thread.start()
-        clean_thread.start()
-
-        send_email(images_with_object)
-        clean_folder()
 
 
     print(status_list)
@@ -88,4 +85,6 @@ while True:
 
 result.release()
 video.release()
+
+clean_thread.start()
 
