@@ -66,6 +66,7 @@ while True:
 
     if status == 1:
         result.write(frame)
+
     if status_list[0] == 1 and status_list[1] == 0:
         email_thread = Thread(target=send_email, args=(images_with_object , ))
         email_thread.daemon = True
@@ -86,5 +87,7 @@ while True:
 result.release()
 video.release()
 
+
 clean_thread.start()
+
 
