@@ -68,7 +68,8 @@ while True:
         result.write(frame)
 
     if status_list[0] == 1 and status_list[1] == 0:
-        email_thread = Thread(target=send_email, args=(images_with_object , ))
+        result.release()
+        email_thread = Thread(target=send_email, args=(images_with_object , "recordings/video.mp4" ))
         email_thread.daemon = True
         clean_thread = Thread(target=clean_folder)
         email_thread.daemon = True
@@ -84,10 +85,9 @@ while True:
     if key == ord("q"):
         break
 
-result.release()
 video.release()
 
-
-clean_thread.start()
+if clean_thread is not None:
+    clean_thread.start()
 
 
